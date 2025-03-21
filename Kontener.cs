@@ -1,41 +1,43 @@
 ﻿namespace Aplikacja1;
 
-public class Kontener
+public abstract class Kontener
 {
-    private double cargoWeight; //kg
-    private double height; //cm
-    private double contenerWeight; //kg
-    private double depth; //cm
-    private double maxCapacity; //kg
-    private string type;
+    abstract public double cargoWeight { set; get; } //kg
+    abstract public double height{ set; get; }  //cm
+    abstract public double contenerWeight{ set; get; }  //kg
+    abstract public double depth{ set; get; }  //cm
+    abstract public double maxCapacity{ set; get; }  //kg
+    abstract public string type{ set; get; } 
     
-    public Kontener(string type)
+    public Kontener(string type, double height, double contenerWeight, double depth, double maxCapacity)
     {
-        this.type = type;
-    }
-
-    public void unload()
-    {
+        switch(type) 
+        {
+            case "L" or "G" or "C":
+                this.type = type;
+                this.height = height;
+                this.contenerWeight = contenerWeight;
+                this.depth = depth;
+                this.maxCapacity = maxCapacity;
+                break;
+            default:
+                throw new Exception("Unknown type");
+        }
         
     }
 
-    public void load(double masa)
+    public virtual void unload()
+    {
+        cargoWeight = 0;
+    }
+
+    public virtual void load(double masa, string cargoType)
     {
         if (masa>this.maxCapacity)
         {
-            throw OverfillException("Masa przekracza pojemnosc kontenera");
-        }
-        else
-        {
-            
+            throw new OverfillException("Maximum capacity exceeded");
         }
         
-        
-        
     }
-
-    private Exception OverfillException(string message)
-    {
-        throw new NotImplementedException();
-    }
+    
 }
