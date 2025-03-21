@@ -2,6 +2,6 @@
 
 class Program
 {
-    w
+    
 }
 
